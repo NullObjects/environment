@@ -1,0 +1,61 @@
+<template>
+  <v-container>
+    <v-navigation-drawer
+      v-model="drawer"
+      color="primary"
+      :src="bg"
+      app
+      dark
+      permanent
+      expand-on-hover
+      disable-resize-watcher
+    >
+      <v-list dense nav class="py-0">
+        <v-list-item two-line :class="'px-0'">
+          <v-list-item-avatar>
+            <img alt="logo" src="../../assets/img.png" width="15" />
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+            <v-list-item-title>HomeEnvironment</v-list-item-title>
+            <v-list-item-subtitle>NullObject</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list-item v-for="item in items" :key="item.title" link>
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <router-link tag="p" :to="item.link">{{ item.title }}</router-link>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+  </v-container>
+</template>
+
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+
+@Component
+export default class Navigation extends Vue {
+  drawer = true;
+  items = [
+    { title: "环境监控", icon: "mdi-view-dashboard", link: "/" },
+    { title: "设备状态", icon: "mdi-devices", link: "/device" },
+    { title: "About", icon: "mdi-help-box", link: "/about" }
+  ];
+
+  background = true;
+
+  get bg() {
+    return this.background
+      ? "https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
+      : undefined;
+  }
+}
+</script>
