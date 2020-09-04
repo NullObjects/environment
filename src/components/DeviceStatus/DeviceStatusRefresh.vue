@@ -36,7 +36,6 @@ export default class DeviceStatusRefresh extends Vue {
   HDDOccupancyRate = new DeviceStatusChart().PieChart;
 
   timer: any;
-
   mounted(): void {
     this.CPUOccupancyRate.title.text = "CPU占用";
     this.CPUOccupancyRate.title.subtext = "CPU%";
@@ -84,22 +83,22 @@ export default class DeviceStatusRefresh extends Vue {
         this.CPUOccupancyRate.series[0].data[0].value =
           Response.data.cpuOccupancyRate;
         this.CPUOccupancyRate.series[0].data[1].value =
-          (10000 - Response.data.cpuOccupancyRate * 100) / 100;
+          100 - Response.data.cpuOccupancyRate;
 
         this.RAMOccupancyRate.series[0].data[0].value =
           Response.data.ramOccupancyRate;
         this.RAMOccupancyRate.series[0].data[1].value =
-          (10000 - Response.data.ramOccupancyRate * 100) / 100;
+          100 - Response.data.ramOccupancyRate;
 
         this.SDCardOccupancyRate.series[0].data[0].value =
           Response.data.sdCardOccupancyRate;
         this.SDCardOccupancyRate.series[0].data[1].value =
-          (10000 - Response.data.sdCardOccupancyRate * 100) / 100;
+          100 - Response.data.sdCardOccupancyRate;
 
         this.HDDOccupancyRate.series[0].data[0].value =
           Response.data.hddOccupancyRate;
         this.HDDOccupancyRate.series[0].data[1].value =
-          (10000 - Response.data.hddOccupancyRate * 100) / 100;
+          100 - Response.data.hddOccupancyRate;
       })
       .catch(Error => {
         console.log("Err:" + Error);

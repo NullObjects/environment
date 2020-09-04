@@ -108,18 +108,18 @@
     </v-row>
 
     <v-row>
-      <v-chart :options="Environment" style="width:100%" />
+      <v-chart :options="DeviceStatus" style="width:100%" />
     </v-row>
   </v-container>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
-import EnvironmentChart from "./EnvironmentChart";
+import DeviceStatusChart from "./DeviceStatusChart";
 
 const now = new Date();
 @Component
-export default class Environment extends Vue {
+export default class DeviceStatus extends Vue {
   value = false;
   item = 0;
   items = [
@@ -142,7 +142,7 @@ export default class Environment extends Vue {
   alert = false;
   alertType = "warning";
   alertMsg = "";
-  Environment = new EnvironmentChart().LineChart;
+  DeviceStatus = new DeviceStatusChart().LinesChart;
 
   mounted(): void {
     this.item = 2;
@@ -165,32 +165,52 @@ export default class Environment extends Vue {
 
   RefreshData(value: string): void {
     this.axios
-      .get("/Environment/Get/" + value)
+      .get("/DeviceStatus/Get/" + value)
       .then(Response => {
-        this.Environment.xAxis.data = [];
-        this.Environment.series[0].data = [];
-        this.Environment.series[1].data = [];
+        this.DeviceStatus.xAxis.data = [];
+        for (let i = 0; i < 5; i++) {
+          this.DeviceStatus.series[i].data = [];
+        }
         if (typeof Response.data.length === "number") {
           Response.data.forEach(
             (element: {
               recordTime: string;
-              temperature: number;
-              humidity: number;
+              cpuTemperature: number;
+              cpuOccupancyRate: number;
+              ramOccupancyRate: number;
+              sdCardOccupancyRate: number;
+              hddOccupancyRate: number;
             }) => {
-              this.Environment.xAxis.data.push(
+              this.DeviceStatus.xAxis.data.push(
                 element.recordTime.replace("T", " ")
               );
-              this.Environment.series[0].data.push(element.temperature);
-              this.Environment.series[1].data.push(element.humidity);
+              this.DeviceStatus.series[0].data.push(element.cpuTemperature);
+              this.DeviceStatus.series[1].data.push(element.cpuOccupancyRate);
+              this.DeviceStatus.series[2].data.push(element.ramOccupancyRate);
+              this.DeviceStatus.series[3].data.push(
+                element.sdCardOccupancyRate
+              );
+              this.DeviceStatus.series[4].data.push(element.hddOccupancyRate);
             }
           );
         } else {
           for (let i = 0; i < 5; i++) {
-            this.Environment.xAxis.data.push(
+            this.DeviceStatus.xAxis.data.push(
               Response.data.recordTime.replace("T", " ")
             );
-            this.Environment.series[0].data.push(Response.data.temperature);
-            this.Environment.series[1].data.push(Response.data.humidity);
+            this.DeviceStatus.series[0].data.push(Response.data.cpuTemperature);
+            this.DeviceStatus.series[1].data.push(
+              Response.data.cpuOccupancyRate
+            );
+            this.DeviceStatus.series[2].data.push(
+              Response.data.ramOccupancyRate
+            );
+            this.DeviceStatus.series[3].data.push(
+              Response.data.sdCardOccupancyRate
+            );
+            this.DeviceStatus.series[4].data.push(
+              Response.data.hddOccupancyRate
+            );
           }
         }
       })
