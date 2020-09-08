@@ -120,7 +120,7 @@ export default class DeviceStatus extends Vue {
         }
       })
       .catch(Error => {
-        console.log(Error);
+        console.log("Err:" + Error);
       });
   }
 }

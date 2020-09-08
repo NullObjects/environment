@@ -70,7 +70,6 @@ export default class DeviceStatusRefresh extends Vue {
     this.axios
       .get("/DeviceStatus/Get/latest")
       .then(Response => {
-        console.log(Response.data);
         if (this.CPUTemperature.xAxis.data.length >= 30) {
           this.CPUTemperature.xAxis.data.shift();
           this.CPUTemperature.series[0].data.shift();
