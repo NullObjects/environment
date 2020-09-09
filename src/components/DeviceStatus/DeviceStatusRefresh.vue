@@ -35,7 +35,7 @@ export default class DeviceStatusRefresh extends Vue {
   SDCardOccupancyRate = new DeviceStatusChart().PieChart;
   HDDOccupancyRate = new DeviceStatusChart().PieChart;
 
-  timer: object;
+  timer = 0;
   mounted(): void {
     this.CPUOccupancyRate.title.text = "CPU占用";
     this.CPUOccupancyRate.title.subtext = "CPU%";

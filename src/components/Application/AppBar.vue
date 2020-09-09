@@ -4,8 +4,8 @@
       <div class="d-flex align-center">
         <v-btn
           icon
-          v-if="!drawer['draw']"
-          @click.stop="drawer['draw'] = !drawer['draw']"
+          v-if="!drawer.draw"
+          @click.stop="drawer.draw = !drawer.draw"
         >
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
@@ -43,6 +43,6 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class AppBar extends Vue {
-  @Prop() drawer!: object;
+  @Prop() drawer!: { draw: boolean };
 }
 </script>

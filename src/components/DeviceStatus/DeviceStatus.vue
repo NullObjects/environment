@@ -1,10 +1,6 @@
 <template>
   <v-container>
-    <DataPicker
-      @on-span-change="RefreshData"
-      @on-start-change="RefreshData"
-      @on-end-change="RefreshData"
-    />
+    <DataPicker @on-span-change="RefreshData" @on-date-change="RefreshData" />
     <DataDisplay
       :data-chart="DeviceStatus"
       :data-header="tableHeader"

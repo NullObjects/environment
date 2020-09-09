@@ -14,8 +14,7 @@ import EnvironmentChart from "./EnvironmentChart";
 export default class EnvironmentRefresh extends Vue {
   Environment = new EnvironmentChart().LineChart;
 
-  timer: any;
-
+  timer = 0;
   mounted(): void {
     this.Environment.title.text = "环境趋势(实时)";
     this.Environment.xAxis.axisLabel.interval = 10;

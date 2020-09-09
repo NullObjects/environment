@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <!--时间段选择-->
-      <v-col cols="3">
+      <v-col>
         <v-menu
           v-model="value"
           open-on-hover
@@ -26,7 +26,7 @@
         </v-menu>
       </v-col>
       <!--开始时间选择-->
-      <v-col cols="3">
+      <v-col>
         <v-menu
           ref="startMenu"
           v-model="startMenu"
@@ -56,14 +56,12 @@
             <v-btn text color="primary" @click="startMenu = false"
               >Cancel
             </v-btn>
-            <v-btn text color="primary" @click="$refs.startMenu.save(start)"
-              >OK
-            </v-btn>
+            <v-btn text color="primary" @click="onDateChange">OK </v-btn>
           </v-date-picker>
         </v-menu>
       </v-col>
       <!--结束时间选择-->
-      <v-col cols="3">
+      <v-col>
         <v-menu
           ref="endMenu"
           v-model="endMenu"
@@ -91,11 +89,21 @@
           <v-date-picker v-model="end" no-title scrollable>
             <v-spacer></v-spacer>
             <v-btn text color="primary" @click="endMenu = false">Cancel</v-btn>
-            <v-btn text color="primary" @click="$refs.endMenu.save(end)"
-              >OK
-            </v-btn>
+            <v-btn text color="primary" @click="onDateChange">OK </v-btn>
           </v-date-picker>
         </v-menu>
+      </v-col>
+      <!--错误提示-->
+      <v-col>
+        <v-alert
+          v-model="alert"
+          :type="alertType"
+          dismissible
+          dense
+          border="top"
+          colored-border
+          >{{ alertMsg }}
+        </v-alert>
       </v-col>
     </v-row>
   </v-container>
@@ -138,6 +146,10 @@ export default class DataPicker extends Vue {
    */
   end = this.start;
 
+  alert = false;
+  alertType = "warning";
+  alertMsg = "";
+
   /**
    * 初始化选择
    */
@@ -145,31 +157,44 @@ export default class DataPicker extends Vue {
     this.span = 1;
   }
 
-  @Watch("span")
-  @Emit()
   /**
    * 时间段变化
    */
+  @Watch("span")
+  @Emit()
   onSpanChange() {
     return this.spans[this.span].link;
   }
 
-  @Watch("start")
-  @Emit()
+  $refs!: { startMenu: HTMLFormElement; endMenu: HTMLFormElement };
   /**
-   * 开始时间变化
+   * 选择日期变化
    */
-  onStartChange() {
-    return this.start + "T00:00:00&&" + this.end + "T23:59:59";
+  @Emit()
+  onDateChange() {
+    this.$refs.startMenu.save(this.start);
+    this.$refs.endMenu.save(this.end);
+    if (this.getDaySpan(this.start, this.end) <= 7) {
+      this.alert = false;
+      this.alertMsg = "";
+      return this.start + "T00:00:00&&" + this.end + "T23:59:59";
+    } else {
+      this.alert = true;
+      this.alertMsg = "选择时间不能大于一周，请重新选择！";
+      return "latest";
+    }
   }
 
-  @Watch("end")
-  @Emit()
   /**
-   * 结束时间变化
+   * 获取相差天数
+   * @param startTime
+   * @param endTime
    */
-  onEndChange() {
-    return this.start + "T00:00:00&&" + this.end + "T23:59:59";
+  getDaySpan(startTime: string, endTime: string): number {
+    const dateBegin = new Date(startTime.replace(/-/g, "/")); //将-转化为/，使用new Date
+    const dateEnd = new Date(endTime.replace(/-/g, "/")); //将-转化为/，使用new Date
+    const dateDiff = dateEnd.getTime() - dateBegin.getTime(); //时间差的毫秒数
+    return Math.floor(dateDiff / (24 * 3600 * 1000)); //计算出相差天数
   }
 }
 </script>

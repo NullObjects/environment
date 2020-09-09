@@ -20,8 +20,6 @@ import AppBar from "@/components/Application/AppBar.vue";
   }
 })
 export default class App extends Vue {
-  drawer = {
-    draw: "true"
-  };
+  drawer = { draw: "true" };
 }
 </script>
