@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <v-row>
       <!--时间段选择-->
       <v-col cols="3">

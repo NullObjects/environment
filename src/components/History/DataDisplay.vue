@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <v-row>
       <!--展示方式选择标签-->
       <v-tabs grow v-model="tabItem">
@@ -52,15 +52,15 @@ export default class DataDisplay extends Vue {
   /**
    * 图表
    */
-  @Prop() dataChart!: any;
+  @Prop() dataChart!: object;
   /**
    * 表格-表头
    */
-  @Prop() dataHeader!: any[];
+  @Prop() dataHeader!: object[];
   /**
    * 表格-数据
    */
-  @Prop() dataBody!: any[];
+  @Prop() dataBody!: object[];
   /**
    * 表格-搜索
    */

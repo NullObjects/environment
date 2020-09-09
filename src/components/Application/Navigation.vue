@@ -1,12 +1,12 @@
 <template>
   <v-container>
     <v-navigation-drawer
-      v-model="drawer"
+      v-model="drawer['draw']"
       color="primary"
       :src="bg"
       app
       dark
-      permanent
+      bottom
       expand-on-hover
       disable-resize-watcher
     >
@@ -39,11 +39,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class Navigation extends Vue {
-  drawer = true;
+  @Prop() drawer!: object;
   items = [
     { title: "环境监控", icon: "mdi-view-dashboard", link: "/" },
     { title: "设备状态", icon: "mdi-devices", link: "/device" },

@@ -1,22 +1,22 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="4">
+      <v-col>
         <v-chart :options="CPUOccupancyRate" style="width:100%" />
       </v-col>
-      <v-col cols="4">
+      <v-col>
         <v-chart :options="CPUTemperature" style="width:100%" />
       </v-col>
-      <v-col cols="4">
+      <v-col>
         <v-chart :options="RAMOccupancyRate" style="width:100%" />
       </v-col>
     </v-row>
 
     <v-row>
-      <v-col cols="6">
+      <v-col>
         <v-chart :options="SDCardOccupancyRate" style="width:100%" />
       </v-col>
-      <v-col cols="6">
+      <v-col>
         <v-chart :options="HDDOccupancyRate" style="width:100%" />
       </v-col>
     </v-row>
@@ -35,7 +35,7 @@ export default class DeviceStatusRefresh extends Vue {
   SDCardOccupancyRate = new DeviceStatusChart().PieChart;
   HDDOccupancyRate = new DeviceStatusChart().PieChart;
 
-  timer: any;
+  timer: object;
   mounted(): void {
     this.CPUOccupancyRate.title.text = "CPU占用";
     this.CPUOccupancyRate.title.subtext = "CPU%";

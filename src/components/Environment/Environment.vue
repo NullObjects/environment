@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <DataPicker
       @on-span-change="RefreshData"
       @on-start-change="RefreshData"
@@ -43,7 +43,7 @@ export default class Environment extends Vue {
    * 数据
    */
   get tableBody() {
-    const table: any[] = [];
+    const table: object[] = [];
     this.Environment.xAxis.data.forEach((val, index) => {
       table.push({
         recordTime: val,

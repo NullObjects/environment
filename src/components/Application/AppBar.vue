@@ -2,6 +2,13 @@
   <v-container>
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
+        <v-btn
+          icon
+          v-if="!drawer['draw']"
+          @click.stop="drawer['draw'] = !drawer['draw']"
+        >
+          <v-icon>mdi-dots-vertical</v-icon>
+        </v-btn>
         <v-img
           alt="Vuetify Logo"
           class="shrink mr-2"
@@ -32,8 +39,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
-export default class AppBar extends Vue {}
+export default class AppBar extends Vue {
+  @Prop() drawer!: object;
+}
 </script>

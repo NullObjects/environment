@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <Navigation />
-    <AppBar />
+    <Navigation :drawer="drawer" />
+    <AppBar :drawer="drawer" />
     <v-main>
       <router-view />
     </v-main>
@@ -19,5 +19,9 @@ import AppBar from "@/components/Application/AppBar.vue";
     AppBar
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  drawer = {
+    draw: "true"
+  };
+}
 </script>
