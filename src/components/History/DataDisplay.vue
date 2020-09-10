@@ -2,8 +2,12 @@
   <v-container>
     <v-row>
       <!--展示方式选择标签-->
-      <v-tabs grow v-model="tabItem">
-        <v-tab v-for="(tabItem, index) in tabItems" :key="index">
+      <v-tabs grow v-model="tabItem" color="accent">
+        <v-tab
+          class="secondary"
+          v-for="(tabItem, index) in tabItems"
+          :key="index"
+        >
           <v-icon>{{ tabItem.icon }}</v-icon>
           {{ tabItem.title }}
         </v-tab>
@@ -16,7 +20,7 @@
         </v-tab-item>
         <!--        表格展示-->
         <v-tab-item :key="1">
-          <v-card>
+          <v-card color="secondary">
             <v-card-title>
               历史信息
               <v-spacer></v-spacer>
@@ -32,10 +36,9 @@
               :headers="dataHeader"
               :items="dataBody"
               :search="search"
-              dark
               dense
               multi-sort
-              class="elevation-1"
+              class="secondary"
             ></v-data-table>
           </v-card>
         </v-tab-item>

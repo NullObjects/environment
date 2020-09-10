@@ -5,7 +5,6 @@
       color="primary"
       :src="bg"
       app
-      dark
       expand-on-hover
     >
       <v-list dense nav class="py-0">
@@ -15,9 +14,9 @@
               alt="self Logo"
               class="shrink mr-2"
               contain
-              src="../assets/self.png"
+              src="../../assets/self.png"
               transition="scale-transition"
-              width="15"
+              width="40"
             />
           </v-list-item-avatar>
 
@@ -55,7 +54,7 @@ export default class Navigation extends Vue {
     { title: "About", icon: "mdi-help-box", link: "/about" }
   ];
 
-  background = true;
+  background = false;
 
   get bg() {
     return this.background

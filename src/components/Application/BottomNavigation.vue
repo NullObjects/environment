@@ -1,6 +1,13 @@
 <template>
   <v-container>
-    <v-bottom-navigation v-if="!draw" color="primary" app grow hide-on-scroll>
+    <v-bottom-navigation
+      v-if="!draw"
+      class="secondary"
+      color="accent"
+      app
+      grow
+      hide-on-scroll
+    >
       <v-btn v-for="item in items" :key="item.title">
         <router-link tag="span" :to="item.link">{{ item.title }}</router-link>
         <v-icon>{{ item.icon }}</v-icon>

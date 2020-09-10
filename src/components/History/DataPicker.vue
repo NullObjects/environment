@@ -11,7 +11,7 @@
           offset-y
         >
           <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary" dark v-bind="attrs" v-on="on">
+            <v-btn class="rounded-xl" color="primary" v-bind="attrs" v-on="on">
               <v-icon>mdi-timer</v-icon>
               {{ spans[span].title }}
             </v-btn>
@@ -51,7 +51,7 @@
               v-on="on"
             ></v-text-field>
           </template>
-          <v-date-picker v-model="start" no-title scrollable>
+          <v-date-picker class="rounded-xl" v-model="start" no-title scrollable>
             <v-spacer></v-spacer>
             <v-btn text color="primary" @click="startMenu = false"
               >Cancel
@@ -86,7 +86,7 @@
               v-on="on"
             ></v-text-field>
           </template>
-          <v-date-picker v-model="end" no-title scrollable>
+          <v-date-picker class="rounded-xl" v-model="end" no-title scrollable>
             <v-spacer></v-spacer>
             <v-btn text color="primary" @click="endMenu = false">Cancel</v-btn>
             <v-btn text color="primary" @click="onDateChange">OK </v-btn>

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-app-bar app color="primary" dark>
+    <v-app-bar app color="primary">
       <div class="d-flex align-center">
         <v-img
           alt="environment Logo"

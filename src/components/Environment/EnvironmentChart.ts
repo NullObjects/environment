@@ -126,6 +126,6 @@ export default class EnvironmentChart {
         }
       }
     ],
-    color: ["#FF6E6E", "#69FF94"]
+    color: ["#FF6E6E", "#69FF94", "#D6ACFF", "#A4FFFF", "#FFFFA5"]
   };
 }
