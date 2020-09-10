@@ -2,29 +2,13 @@
   <v-container>
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
-        <v-btn
-          icon
-          v-if="!drawer.draw"
-          @click.stop="drawer.draw = !drawer.draw"
-        >
-          <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
         <v-img
-          alt="Vuetify Logo"
+          alt="environment Logo"
           class="shrink mr-2"
           contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          src="../../assets/environment.svg"
           transition="scale-transition"
           width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
         />
       </div>
 
@@ -39,10 +23,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
 @Component
-export default class AppBar extends Vue {
-  @Prop() drawer!: { draw: boolean };
-}
+export default class AppBar extends Vue {}
 </script>

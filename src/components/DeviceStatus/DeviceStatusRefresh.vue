@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row dense>
       <v-col>
         <v-chart :options="CPUOccupancyRate" style="width:100%" />
       </v-col>
@@ -12,7 +12,7 @@
       </v-col>
     </v-row>
 
-    <v-row>
+    <v-row dense>
       <v-col>
         <v-chart :options="SDCardOccupancyRate" style="width:100%" />
       </v-col>
@@ -100,7 +100,7 @@ export default class DeviceStatusRefresh extends Vue {
           100 - Response.data.hddOccupancyRate;
       })
       .catch(Error => {
-        console.log("Err:" + Error);
+        console.log("axiosErr:" + Error);
       });
   }
 }

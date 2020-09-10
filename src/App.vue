@@ -1,7 +1,8 @@
 <template>
   <v-app>
-    <Navigation :drawer="drawer" />
-    <AppBar :drawer="drawer" />
+    <Navigation :navDrawer="navDrawer" />
+    <BottomNavigation :draw="navDrawer.draw" />
+    <AppBar />
     <v-main>
       <router-view />
     </v-main>
@@ -11,15 +12,17 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Navigation from "@/components/Application/Navigation.vue";
+import BottomNavigation from "@/components/Application/BottomNavigation.vue";
 import AppBar from "@/components/Application/AppBar.vue";
 
 @Component({
   components: {
     Navigation,
+    BottomNavigation,
     AppBar
   }
 })
 export default class App extends Vue {
-  drawer = { draw: "true" };
+  navDrawer = { draw: "true" };
 }
 </script>

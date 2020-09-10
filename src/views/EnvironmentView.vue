@@ -1,6 +1,5 @@
 <template>
   <v-container class="home text-center">
-    <img alt="Vue logo" src="../assets/logo.svg" width="80" />
     <EnvironmentRefresh />
     <Environment />
   </v-container>

@@ -1,19 +1,24 @@
 <template>
   <v-container>
     <v-navigation-drawer
-      v-model="drawer.draw"
+      v-model="navDrawer.draw"
       color="primary"
       :src="bg"
       app
       dark
-      bottom
       expand-on-hover
-      disable-resize-watcher
     >
       <v-list dense nav class="py-0">
         <v-list-item two-line :class="'px-0'">
           <v-list-item-avatar>
-            <img alt="logo" src="../../assets/img.png" width="15" />
+            <v-img
+              alt="self Logo"
+              class="shrink mr-2"
+              contain
+              src="../assets/self.png"
+              transition="scale-transition"
+              width="15"
+            />
           </v-list-item-avatar>
 
           <v-list-item-content>
@@ -43,7 +48,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class Navigation extends Vue {
-  @Prop() drawer!: { draw: boolean };
+  @Prop() navDrawer!: { draw: boolean };
   items = [
     { title: "环境监控", icon: "mdi-view-dashboard", link: "/" },
     { title: "设备状态", icon: "mdi-devices", link: "/device" },
