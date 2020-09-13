@@ -5,7 +5,7 @@
         alt="environment Logo"
         class="shrink mr-2"
         contain
-        src="../assets/environment.svg"
+        src="../assets/logo/environment.svg"
         transition="scale-transition"
         width="80"
       />
@@ -13,7 +13,7 @@
         alt="self Logo"
         class="shrink mr-2"
         contain
-        src="../assets/self.png"
+        src="../assets/logo/self.png"
         transition="scale-transition"
         width="80"
       />
@@ -23,7 +23,7 @@
         alt="vue Logo"
         class="shrink mr-2"
         contain
-        src="../assets/vue.svg"
+        src="../assets/logo/vue.svg"
         transition="scale-transition"
         width="60"
       />
@@ -31,7 +31,7 @@
         alt="vuetify Logo"
         class="shrink mr-2"
         contain
-        src="../assets/vuetify.svg"
+        src="../assets/logo/vuetify.svg"
         transition="scale-transition"
         width="60"
       />
@@ -39,7 +39,7 @@
         alt="echarts Logo"
         class="shrink mr-2"
         contain
-        src="../assets/echarts.svg"
+        src="../assets/logo/echarts.svg"
         transition="scale-transition"
         width="60"
       />

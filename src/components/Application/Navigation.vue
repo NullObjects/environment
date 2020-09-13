@@ -14,7 +14,7 @@
               alt="self Logo"
               class="shrink mr-2"
               contain
-              src="../../assets/self.png"
+              src="../../assets/logo/self.png"
               transition="scale-transition"
               width="40"
             />

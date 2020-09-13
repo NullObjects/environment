@@ -6,7 +6,7 @@
           alt="environment Logo"
           class="shrink mr-2"
           contain
-          src="../../assets/environment.svg"
+          src="../../assets/logo/environment.svg"
           transition="scale-transition"
           width="40"
         />
