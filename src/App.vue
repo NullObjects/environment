@@ -3,8 +3,28 @@
     <Navigation :navDrawer="navDrawer" />
     <BottomNavigation :draw="navDrawer.draw" />
     <AppBar />
-    <v-main class="secondary">
-      <router-view />
+    <v-main class="secondary" id="main">
+      <vue-particles
+        color="#FF6E6E"
+        :particleOpacit="0.7"
+        :particlesNumber="60"
+        shapeType="circle"
+        :particleSize="4"
+        linesColor="#FF6E6E"
+        :linesWidth="1"
+        :lineLinked="true"
+        :lineOpacity="0.4"
+        :linesDistance="150"
+        :moveSpeed="2"
+        :hoverEffect="true"
+        hoverMode="grab"
+        :clickEffect="true"
+        clickMode="push"
+      >
+      </vue-particles>
+      <div id="view">
+        <router-view />
+      </div>
     </v-main>
   </v-app>
 </template>
@@ -37,3 +57,23 @@ export default class App extends Vue {
   }
 }
 </script>
+<style>
+#main {
+  /*background-image: url("./assets/image/background2.jpg");*/
+  /*background-attachment: fixed;*/
+  /*background-repeat: no-repeat;*/
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#particles-js {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+#view {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+</style>
