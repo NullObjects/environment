@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <!--    底部导航-->
     <v-bottom-navigation
       v-if="!draw"
       class="secondary"
@@ -21,6 +22,9 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class BottomNavigation extends Vue {
+  /**
+   * 侧边导航显示
+   */
   @Prop() draw!: boolean;
   items = [
     { title: "环境监控", icon: "mdi-view-dashboard", link: "/" },

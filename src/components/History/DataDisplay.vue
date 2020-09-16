@@ -2,25 +2,29 @@
   <v-container>
     <v-row>
       <!--展示方式选择标签-->
-      <v-tabs grow v-model="tabItem" color="accent">
-        <v-tab
-          class="secondary"
-          v-for="(tabItem, index) in tabItems"
-          :key="index"
-        >
+      <v-tabs
+        grow
+        v-model="tabItem"
+        color="accent"
+        background-color="rgba(128, 128, 128, 0)"
+      >
+        <v-tab v-for="(tabItem, index) in tabItems" :key="index">
           <v-icon>{{ tabItem.icon }}</v-icon>
           {{ tabItem.title }}
         </v-tab>
       </v-tabs>
       <!--数据展示-->
-      <v-tabs-items v-model="tabItem" style="width:100%">
+      <v-tabs-items
+        v-model="tabItem"
+        style="width:100%; background:rgba(128, 128, 128, 0)"
+      >
         <!--        图表展示-->
         <v-tab-item :key="0">
           <v-chart :options="dataChart" style="width:100%" />
         </v-tab-item>
         <!--        表格展示-->
         <v-tab-item :key="1">
-          <v-card color="secondary">
+          <v-card style="background:rgba(128, 128, 128, 0)">
             <v-card-title>
               历史信息
               <v-spacer></v-spacer>
@@ -38,7 +42,7 @@
               :search="search"
               dense
               multi-sort
-              class="secondary"
+              style="background:rgba(128, 128, 128, 0)"
             ></v-data-table>
           </v-card>
         </v-tab-item>

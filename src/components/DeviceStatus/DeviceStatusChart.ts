@@ -1,6 +1,6 @@
 export default class DeviceStatusChart {
   public LineChart = {
-    backgroundColor: "#272935",
+    backgroundColor: "rgba(128, 128, 128, 0)",
 
     title: {
       textStyle: {
@@ -96,7 +96,7 @@ export default class DeviceStatusChart {
   };
 
   public LinesChart = {
-    backgroundColor: "#272935",
+    backgroundColor: "rgba(128, 128, 128, 0)",
 
     title: {
       textStyle: {
@@ -104,7 +104,7 @@ export default class DeviceStatusChart {
       },
       text: "设备状态信息",
       subtext: "RPi",
-      x: "center"
+      x: "right"
     },
 
     legend: {
@@ -305,7 +305,7 @@ export default class DeviceStatusChart {
   };
 
   public PieChart = {
-    backgroundColor: "#272935",
+    backgroundColor: "rgba(128, 128, 128, 0)",
 
     title: {
       textStyle: {

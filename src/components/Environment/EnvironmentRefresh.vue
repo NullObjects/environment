@@ -33,10 +33,15 @@ export default class EnvironmentRefresh extends Vue {
     clearInterval(this.timer);
   }
 
+  /**
+   * 刷新数据
+   * @constructor
+   */
   RefreshData(): void {
     this.axios
       .get("/Environment/Get/latest")
       .then(Response => {
+        // 数据量大于指定数量
         if (this.Environment.xAxis.data.length >= 60) {
           this.Environment.xAxis.data.shift();
           this.Environment.series[0].data.shift();

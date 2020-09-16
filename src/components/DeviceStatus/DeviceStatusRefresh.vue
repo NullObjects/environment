@@ -2,10 +2,12 @@
   <v-container>
     <v-row dense>
       <v-col>
-        <v-chart :options="CPUOccupancyRate" style="width:100%" />
-      </v-col>
-      <v-col>
         <v-chart :options="CPUTemperature" style="width:100%" />
+      </v-col>
+    </v-row>
+    <v-row dense>
+      <v-col>
+        <v-chart :options="CPUOccupancyRate" style="width:100%" />
       </v-col>
       <v-col>
         <v-chart :options="RAMOccupancyRate" style="width:100%" />
@@ -66,10 +68,15 @@ export default class DeviceStatusRefresh extends Vue {
     clearInterval(this.timer);
   }
 
+  /**
+   * 刷新数据
+   * @constructor
+   */
   RefreshData(): void {
     this.axios
       .get("/DeviceStatus/Get/latest")
       .then(Response => {
+        // 数据量大于指定数量
         if (this.CPUTemperature.xAxis.data.length >= 30) {
           this.CPUTemperature.xAxis.data.shift();
           this.CPUTemperature.series[0].data.shift();

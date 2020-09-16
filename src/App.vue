@@ -4,27 +4,27 @@
     <BottomNavigation :draw="navDrawer.draw" />
     <AppBar />
     <v-main class="secondary" id="main">
-      <vue-particles
-        color="#FF6E6E"
-        :particleOpacit="0.7"
-        :particlesNumber="60"
-        shapeType="circle"
-        :particleSize="4"
-        linesColor="#FF6E6E"
-        :linesWidth="1"
-        :lineLinked="true"
-        :lineOpacity="0.4"
-        :linesDistance="150"
-        :moveSpeed="2"
-        :hoverEffect="true"
-        hoverMode="grab"
-        :clickEffect="true"
-        clickMode="push"
-      >
-      </vue-particles>
-      <div id="view">
-        <router-view />
+      <div id="particles">
+        <vue-particles
+          color="#FF5555"
+          :particleOpacit="0.7"
+          :particlesNumber="80"
+          shapeType="circle"
+          :particleSize="4"
+          linesColor="#8BE9FD"
+          :linesWidth="1"
+          :lineLinked="true"
+          :lineOpacity="0.5"
+          :linesDistance="150"
+          :moveSpeed="2"
+          :hoverEffect="true"
+          hoverMode="grab"
+          :clickEffect="true"
+          clickMode="push"
+        >
+        </vue-particles>
       </div>
+      <router-view />
     </v-main>
   </v-app>
 </template>
@@ -45,7 +45,7 @@ import AppBar from "@/components/Application/AppBar.vue";
 export default class App extends Vue {
   navDrawer = { draw: "true" };
 
-  mounted() {
+  created() {
     this.$vuetify.theme.dark = true;
     this.$vuetify.theme.themes.dark.primary = "#6272A4";
     this.$vuetify.theme.themes.dark.secondary = "#272935";
@@ -59,21 +59,15 @@ export default class App extends Vue {
 </script>
 <style>
 #main {
-  /*background-image: url("./assets/image/background2.jpg");*/
-  /*background-attachment: fixed;*/
-  /*background-repeat: no-repeat;*/
-  width: 100%;
-  height: 100%;
-  position: relative;
+  background-image: url("./assets/image/void.png");
+  background-size: contain;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
-#particles-js {
+#particles {
   width: 100%;
   height: 100%;
-  position: absolute;
-}
-#view {
-  width: 100%;
-  height: 100%;
-  position: absolute;
+  position: fixed;
 }
 </style>

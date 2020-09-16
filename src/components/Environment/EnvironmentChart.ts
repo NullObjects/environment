@@ -1,6 +1,6 @@
 export default class EnvironmentChart {
   public LineChart = {
-    backgroundColor: "#272935",
+    backgroundColor: "rgba(128, 128, 128, 0)",
 
     title: {
       textStyle: {

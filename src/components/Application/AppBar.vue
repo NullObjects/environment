@@ -1,7 +1,9 @@
 <template>
   <v-container>
+    <!--    顶部导航栏-->
     <v-app-bar app color="primary">
       <div class="d-flex align-center">
+        <!--        Logo-->
         <v-img
           alt="environment Logo"
           class="shrink mr-2"
@@ -13,7 +15,7 @@
       </div>
 
       <v-spacer></v-spacer>
-
+      <!--GitHub主页-->
       <v-btn href="https://github.com/nullobjects" target="_blank" text>
         <span class="mr-2">Github</span>
         <v-icon>mdi-open-in-new</v-icon>

@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <!--    侧边导航-->
     <v-navigation-drawer
       v-model="navDrawer.draw"
       color="primary"
@@ -8,6 +9,7 @@
       expand-on-hover
     >
       <v-list dense nav class="py-0">
+        <!--        self logo-->
         <v-list-item two-line :class="'px-0'">
           <v-list-item-avatar>
             <v-img
@@ -19,7 +21,6 @@
               width="40"
             />
           </v-list-item-avatar>
-
           <v-list-item-content>
             <v-list-item-title>HomeEnvironment</v-list-item-title>
             <v-list-item-subtitle>NullObject</v-list-item-subtitle>
@@ -28,13 +29,16 @@
 
         <v-divider></v-divider>
 
+        <!--        导航便签-->
         <v-list-item v-for="item in items" :key="item.title" link>
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <router-link tag="p" :to="item.link">{{ item.title }}</router-link>
+            <router-link tag="span" :to="item.link">{{
+              item.title
+            }}</router-link>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -47,6 +51,9 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class Navigation extends Vue {
+  /**
+   * 侧边导航显示
+   */
   @Prop() navDrawer!: { draw: boolean };
   items = [
     { title: "环境监控", icon: "mdi-view-dashboard", link: "/" },
