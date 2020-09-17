@@ -54,18 +54,45 @@ export default class DeviceStatusRefresh extends Vue {
     this.HDDOccupancyRate.title.text = "硬盘占用";
     this.HDDOccupancyRate.title.subtext = "HDD%";
     this.HDDOccupancyRate.series[0].name = "HDD%";
-    this.RefreshData();
+    this.InitData();
     if (this.timer) {
       clearInterval(this.timer);
     } else {
       this.timer = setInterval(() => {
         this.RefreshData();
-      }, 30000);
+      }, 60000);
     }
   }
 
   destroyed(): void {
     clearInterval(this.timer);
+  }
+
+  /**
+   * 初始化数据
+   * @constructor
+   */
+  InitData(): void {
+    this.axios
+      .get("/DeviceStatus/Get/hour")
+      .then(Response => {
+        this.CPUTemperature.xAxis.data = [];
+        this.CPUTemperature.series[0].data = [];
+        if (typeof Response.data.length === "number") {
+          //获取多条数据
+          Response.data.forEach(
+            (element: { recordTime: string; cpuTemperature: number }) => {
+              this.CPUTemperature.xAxis.data.push(
+                element.recordTime.replace("T", " ")
+              );
+              this.CPUTemperature.series[0].data.push(element.cpuTemperature);
+            }
+          );
+        }
+      })
+      .catch(Error => {
+        console.log("axiosErr:" + Error);
+      });
   }
 
   /**
@@ -77,7 +104,7 @@ export default class DeviceStatusRefresh extends Vue {
       .get("/DeviceStatus/Get/latest")
       .then(Response => {
         // 数据量大于指定数量
-        if (this.CPUTemperature.xAxis.data.length >= 30) {
+        if (this.CPUTemperature.xAxis.data.length >= 60) {
           this.CPUTemperature.xAxis.data.shift();
           this.CPUTemperature.series[0].data.shift();
         }

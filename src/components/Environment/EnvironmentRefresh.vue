@@ -19,7 +19,7 @@ export default class EnvironmentRefresh extends Vue {
     this.Environment.title.text = "环境趋势(实时)";
     this.Environment.xAxis.axisLabel.interval = 10;
 
-    this.RefreshData();
+    this.InitData();
     if (this.timer) {
       clearInterval(this.timer);
     } else {
@@ -31,6 +31,39 @@ export default class EnvironmentRefresh extends Vue {
 
   destroyed(): void {
     clearInterval(this.timer);
+  }
+
+  /**
+   * 刷新数据
+   * @constructor
+   */
+  InitData(): void {
+    this.axios
+      .get("/Environment/Get/hour")
+      .then(Response => {
+        this.Environment.xAxis.data = [];
+        this.Environment.series[0].data = [];
+        this.Environment.series[1].data = [];
+        if (typeof Response.data.length === "number") {
+          //获取多条数据
+          Response.data.forEach(
+            (element: {
+              recordTime: string;
+              temperature: number;
+              humidity: number;
+            }) => {
+              this.Environment.xAxis.data.push(
+                element.recordTime.replace("T", " ")
+              );
+              this.Environment.series[0].data.push(element.temperature);
+              this.Environment.series[1].data.push(element.humidity);
+            }
+          );
+        }
+      })
+      .catch(Error => {
+        console.log("axiosErr:" + Error);
+      });
   }
 
   /**
