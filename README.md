@@ -7,15 +7,15 @@
 - live2d-widget看板娘
 
 ### 预览
-![environmentRegresh](https://github.com/NullObjects/environment/blob/master/images/environment-regresh.png)
+![environmentRefresh](https://github.com/NullObjects/environment/blob/master/images/Environment-refresh.png)
 -----
-![environmentLog](https://github.com/NullObjects/environment/blob/master/images/environment-log.png)
+![environmentLog](https://github.com/NullObjects/environment/blob/master/images/Environment-log.png)
 -----
-![deviceStatusRefresh](https://github.com/NullObjects/environment/blob/master/images/deviceStatus-refresh.png)
+![deviceStatusRefresh](https://github.com/NullObjects/environment/blob/master/images/DeviceStatus-refresh.png)
 -----
-![deviceStatusLog](https://github.com/NullObjects/environment/blob/master/images/deviceStatus-log.png)
+![deviceStatusLog](https://github.com/NullObjects/environment/blob/master/images/DeviceStatus-log.png)
 -----
-![about](https://github.com/NullObjects/environment/blob/master/images/about.png)
+![about](https://github.com/NullObjects/environment/blob/master/images/About.png)
 -----
 
 ## Project setup
