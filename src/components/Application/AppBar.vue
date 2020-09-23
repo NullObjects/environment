@@ -22,8 +22,10 @@
 
       <v-spacer></v-spacer>
       <div class="d-flex align-right">
-        <Login />
-        <Register />
+        <Login :is-login="isLogin" v-if="!isLogin.login" />
+        <Register v-if="!isLogin.login" />
+        <Management v-if="isLogin.login" />
+        <Logout :is-login="isLogin" v-if="isLogin.login" />
       </div>
     </v-app-bar>
   </v-container>
@@ -33,12 +35,18 @@
 import { Component, Vue } from "vue-property-decorator";
 import Login from "@/components/Authentication/Login.vue";
 import Register from "@/components/Authentication/Register.vue";
+import Management from "@/components/Authentication/Management.vue";
+import Logout from "@/components/Authentication/Logout.vue";
 
 @Component({
   components: {
     Login,
-    Register
+    Register,
+    Management,
+    Logout
   }
 })
-export default class AppBar extends Vue {}
+export default class AppBar extends Vue {
+  isLogin = { login: false };
+}
 </script>

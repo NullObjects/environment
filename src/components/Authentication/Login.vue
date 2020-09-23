@@ -35,32 +35,77 @@
           outlined
           hide-details
         ></v-text-field>
+        <v-alert
+          v-model="alert"
+          :type="alertType"
+          dismissible
+          dense
+          border="top"
+          colored-border
+          >{{ alertMsg }}
+        </v-alert>
         <v-spacer></v-spacer>
-        <v-btn text @click="loginMenu = false">Cancel</v-btn>
-        <v-btn text @click="Login">OK</v-btn>
+        <v-btn text @click="loginMenu = false">取消</v-btn>
+        <v-btn text @click="Login">登录</v-btn>
       </v-card>
     </v-menu>
   </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 
 @Component
 export default class Login extends Vue {
+  /**
+   * 登录状态控制
+   */
+  @Prop() isLogin!: { login: boolean };
+
   loginMenu = false;
   user = "";
   password = "";
 
-  $refs!: { loginMenu: HTMLFormElement };
+  alert = false;
+  alertType = "warning";
+  alertMsg = "";
 
-  Login(): void {
-    this.$refs.loginMenu.save();
-
-    window.localStorage["token"] = this.user + this.password;
-
+  /**
+   * 状态初始化
+   */
+  mounted(): void {
     this.user = "";
     this.password = "";
+
+    this.alert = false;
+    this.alertMsg = "warning";
+    this.alertMsg = "";
+  }
+  /**
+   * 登录方法
+   * @constructor
+   */
+  Login(): void {
+    this.axios
+      .post("Authentication/Login", {
+        username: this.user,
+        password: this.password
+      })
+      .then(Response => {
+        //记录用户信息
+        window.localStorage["token"] = Response.data;
+        window.localStorage["user"] = this.user;
+
+        this.axios.defaults.headers.common["Authorization"] =
+          "Bearer " + window.localStorage["token"];
+        //修改登录状态
+        this.isLogin.login = true;
+      })
+      .catch(Error => {
+        this.alert = true;
+        this.alertMsg = "登录失败，请检查账号及密码";
+        console.log(Error);
+      });
   }
 }
 </script>

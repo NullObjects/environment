@@ -1,16 +1,16 @@
 <template>
   <v-container>
     <v-menu
-      ref="registerMenu"
-      v-model="registerMenu"
+      ref="manageMenu"
+      v-model="manageMenu"
       :close-on-content-click="false"
       transition="scale-transition"
       offset-y
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn class="mt-3" icon outlined v-bind="attrs" v-on="on">
-          <v-icon>mdi-account-plus</v-icon>
-          注册
+          <v-icon>mdi-account-edit</v-icon>
+          {{ user }}
         </v-btn>
       </template>
       <v-card color="primary" class="rounded-xl" no-title scrollable>
@@ -75,20 +75,45 @@
           colored-border
           >{{ alertMsg }}
         </v-alert>
+        <v-card v-if="table" style="background:rgba(128, 128, 128, 0)">
+          <v-card-title>
+            用户信息
+            <v-spacer></v-spacer>
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+            ></v-text-field>
+          </v-card-title>
+          <v-data-table
+            :headers="dataHeader"
+            :items="dataBody"
+            :search="search"
+            :items-per-page="5"
+            dense
+            single-select
+            multi-sort
+            style="background:rgba(128, 128, 128, 0)"
+          ></v-data-table>
+        </v-card>
         <v-spacer></v-spacer>
-        <v-btn text @click="registerMenu = false">取消</v-btn>
-        <v-btn text @click="Register">注册</v-btn>
+        <v-btn text @click="manageMenu = false">取消</v-btn>
+        <v-btn text>修改</v-btn>
+        <v-btn text>注册</v-btn>
+        <v-btn text>删除</v-btn>
       </v-card>
     </v-menu>
   </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class Register extends Vue {
-  registerMenu = false;
+  manageMenu = false;
   user = "";
   roles = "public::";
   email = "";
@@ -98,6 +123,15 @@ export default class Register extends Vue {
   alert = false;
   alertType = "warning";
   alertMsg = "";
+
+  table = false;
+  search = "";
+  dataHeader = [
+    { text: "用户", value: "user" },
+    { text: "角色", value: "roles" },
+    { text: "邮箱", value: "email" }
+  ];
+  dataBody: object[] = [];
 
   /**
    * 状态初始化
@@ -112,54 +146,44 @@ export default class Register extends Vue {
     this.alert = false;
     this.alertType = "warning";
     this.alertMsg = "";
-  }
-  /**
-   * 密码确认
-   */
-  @Watch("password")
-  @Watch("confirm")
-  onPasswordChange() {
-    if (this.confirm != this.password) {
-      this.alert = true;
-      this.alertMsg = "密码不一致";
-    } else {
-      this.alert = false;
-      this.alertMsg = "";
-    }
-  }
 
-  Register(): void {
-    //检验注册信息
-    if (
-      this.user == "" ||
-      this.roles == "" ||
-      this.password == "" ||
-      this.confirm == "" ||
-      this.password != this.confirm
-    ) {
-      this.alert = true;
-      this.alertMsg = "请检查注册信息";
-      return;
-    }
-    //注册
+    this.table = false;
+    this.search = "";
+    this.dataHeader = [
+      { text: "用户", value: "user" },
+      { text: "角色", value: "roles" },
+      { text: "邮箱", value: "email" }
+    ];
+    this.dataBody = [];
+
     this.axios
-      .post("Authentication/Register", {
-        username: this.user,
-        role: this.roles,
-        email: this.email,
-        password: this.password
-      })
+      .get("Authentication/Information")
       .then(Response => {
-        //状态初始化
-        this.alert = true;
-        this.alertType = "success";
-        this.alertMsg = this.user + Response.data;
-
-        console.log(Response);
+        if (typeof Response.data.length === "number") {
+          Response.data.forEach(
+            (element: { userName: string; role: string; email: string }) => {
+              this.dataBody.push({
+                user: element.userName,
+                roles: element.role,
+                email: element.email
+              });
+              if (element.userName == window.localStorage["user"]) {
+                this.user = element.userName;
+                this.roles = element.role;
+                this.email = element.email;
+              }
+            }
+          );
+          this.table = true;
+        } else {
+          this.user = Response.data.userName;
+          this.roles = Response.data.role;
+          this.email = Response.data.email;
+        }
       })
       .catch(Error => {
         this.alert = true;
-        this.alertMsg = "注册失败，用户名已注册";
+        this.alertMsg = "获取用户信息失败";
         console.log(Error);
       });
   }
