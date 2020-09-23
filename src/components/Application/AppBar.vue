@@ -14,19 +14,31 @@
         />
       </div>
 
-      <v-spacer></v-spacer>
       <!--GitHub主页-->
       <v-btn href="https://github.com/nullobjects" target="_blank" text>
         <span class="mr-2">Github</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
+
+      <v-spacer></v-spacer>
+      <div class="d-flex align-right">
+        <Login />
+        <Register />
+      </div>
     </v-app-bar>
   </v-container>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import Login from "@/components/Authentication/Login.vue";
+import Register from "@/components/Authentication/Register.vue";
 
-@Component
+@Component({
+  components: {
+    Login,
+    Register
+  }
+})
 export default class AppBar extends Vue {}
 </script>
