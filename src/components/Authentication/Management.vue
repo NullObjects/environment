@@ -19,6 +19,7 @@
           color="success"
           class="mt-3"
           label="User"
+          readonly
           prepend-icon="mdi-account"
           dense
           outlined
@@ -45,22 +46,22 @@
           hide-details
         ></v-text-field>
         <v-text-field
-          v-model="password"
+          v-model="oldPassword"
           type="password"
           color="success"
           class="mt-3"
-          label="Password"
+          label="OldPassword"
           prepend-icon="mdi-onepassword"
           dense
           outlined
           hide-details
         ></v-text-field>
         <v-text-field
-          v-model="confirm"
+          v-model="newPassword"
           type="password"
           color="success"
           class="mt-3"
-          label="Confirm"
+          label="NewPassword"
           prepend-icon="mdi-onepassword"
           dense
           outlined
@@ -88,12 +89,15 @@
             ></v-text-field>
           </v-card-title>
           <v-data-table
+            v-model="selected"
             :headers="dataHeader"
             :items="dataBody"
             :search="search"
             :items-per-page="5"
+            item-key="user"
             dense
             single-select
+            show-select
             multi-sort
             style="background:rgba(128, 128, 128, 0)"
           ></v-data-table>
@@ -101,7 +105,6 @@
         <v-spacer></v-spacer>
         <v-btn text @click="manageMenu = false">取消</v-btn>
         <v-btn text>修改</v-btn>
-        <v-btn text>注册</v-btn>
         <v-btn text>删除</v-btn>
       </v-card>
     </v-menu>
@@ -109,7 +112,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 
 @Component
 export default class Register extends Vue {
@@ -117,14 +120,15 @@ export default class Register extends Vue {
   user = "";
   roles = "public::";
   email = "";
-  password = "";
-  confirm = "";
+  oldPassword = "";
+  newPassword = "";
 
   alert = false;
   alertType = "warning";
   alertMsg = "";
 
   table = false;
+  selected = [];
   search = "";
   dataHeader = [
     { text: "用户", value: "user" },
@@ -133,6 +137,13 @@ export default class Register extends Vue {
   ];
   dataBody: object[] = [];
 
+  @Watch("selected")
+  onSelectedChanged() {
+    if (this.selected.length != 1) return;
+    this.user = this.selected[0]["user"];
+    this.roles = this.selected[0]["roles"];
+    this.email = this.selected[0]["email"];
+  }
   /**
    * 状态初始化
    */
@@ -140,14 +151,15 @@ export default class Register extends Vue {
     this.user = "";
     this.roles = "public::";
     this.email = "";
-    this.password = "";
-    this.confirm = "";
+    this.oldPassword = "";
+    this.newPassword = "";
 
     this.alert = false;
     this.alertType = "warning";
     this.alertMsg = "";
 
     this.table = false;
+    this.selected = [];
     this.search = "";
     this.dataHeader = [
       { text: "用户", value: "user" },
@@ -160,8 +172,14 @@ export default class Register extends Vue {
       .get("Authentication/Information")
       .then(Response => {
         if (typeof Response.data.length === "number") {
+          // 管理员获取所有用户
           Response.data.forEach(
-            (element: { userName: string; role: string; email: string }) => {
+            (element: {
+              userName: string;
+              role: string;
+              email: string;
+              password: string;
+            }) => {
               this.dataBody.push({
                 user: element.userName,
                 roles: element.role,
@@ -176,6 +194,7 @@ export default class Register extends Vue {
           );
           this.table = true;
         } else {
+          // 普通用户获取当前用户
           this.user = Response.data.userName;
           this.roles = Response.data.role;
           this.email = Response.data.email;
@@ -187,5 +206,19 @@ export default class Register extends Vue {
         console.log(Error);
       });
   }
+
+  /**
+   * 修改用户信息
+   * @constructor
+   */
+  // Modidy():void{
+  // }
+
+  /**
+   * 删除用户信息
+   * @constructor
+   */
+  // Delete():void{
+  // }
 }
 </script>

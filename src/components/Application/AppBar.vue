@@ -48,5 +48,19 @@ import Logout from "@/components/Authentication/Logout.vue";
 })
 export default class AppBar extends Vue {
   isLogin = { login: false };
+
+  /**
+   * 初始化
+   */
+  mounted(): void {
+    if (
+      window.localStorage["token"] != undefined &&
+      window.localStorage["user"] != undefined
+    ) {
+      this.axios.defaults.headers.common["Authorization"] =
+        "Bearer " + window.localStorage["token"];
+      this.isLogin.login = true;
+    }
+  }
 }
 </script>
