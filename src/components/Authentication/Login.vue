@@ -54,6 +54,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import SecurityRsa from "@/components/Application/SecurityRsa";
 
 @Component
 export default class Login extends Vue {
@@ -89,7 +90,7 @@ export default class Login extends Vue {
     this.axios
       .post("Authentication/Login", {
         username: this.user,
-        password: this.password
+        password: SecurityRsa.Encrypt(this.password)
       })
       .then(Response => {
         //记录用户信息

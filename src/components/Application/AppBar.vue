@@ -38,8 +38,6 @@ import Register from "@/components/Authentication/Register.vue";
 import Management from "@/components/Authentication/Management.vue";
 import Logout from "@/components/Authentication/Logout.vue";
 
-import SecurityRsa from "./SecurityRsa";
-
 @Component({
   components: {
     Login,
@@ -51,32 +49,35 @@ import SecurityRsa from "./SecurityRsa";
 export default class AppBar extends Vue {
   isLogin = { login: false };
 
+  /**
+   * 获取公钥
+   */
   getKey(): void {
+    // 获取公钥
     this.axios
       .get("Authentication/GetKey")
       .then(Response => {
         window.localStorage["pubKey"] = Response.data;
-
-        console.log(window.localStorage["pubKey"]);
       })
       .catch(Error => {
-        console.log(Error);
+        console.log("GetKetError:" + Error);
       });
   }
+
   /**
    * 初始化
    */
   mounted(): void {
     this.getKey();
-    console.log("getRsa::" + new SecurityRsa().Encrypt("test"));
-    // if (
-    //   window.localStorage["token"] != undefined &&
-    //   window.localStorage["user"] != undefined
-    // ) {
-    //   this.axios.defaults.headers.common["Authorization"] =
-    //     "Bearer " + window.localStorage["token"];
-    //   this.isLogin.login = true;
-    // }
+    //登录状态判断
+    if (
+      window.localStorage["token"] != "" &&
+      window.localStorage["user"] != ""
+    ) {
+      this.axios.defaults.headers.common["Authorization"] =
+        "Bearer " + window.localStorage["token"];
+      this.isLogin.login = true;
+    }
   }
 }
 </script>

@@ -85,6 +85,7 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
+import SecurityRsa from "@/components/Application/SecurityRsa";
 
 @Component
 export default class Register extends Vue {
@@ -128,6 +129,10 @@ export default class Register extends Vue {
     }
   }
 
+  /**
+   * 用户注册
+   * @constructor
+   */
   Register(): void {
     //检验注册信息
     if (
@@ -141,21 +146,21 @@ export default class Register extends Vue {
       this.alertMsg = "请检查注册信息";
       return;
     }
+    console.log("key :" + window.localStorage["pubKey"]);
+    console.log("code :" + SecurityRsa.Encrypt(this.password));
     //注册
     this.axios
       .post("Authentication/Register", {
         username: this.user,
         role: this.roles,
         email: this.email,
-        password: this.password
+        password: SecurityRsa.Encrypt(this.password)
       })
       .then(Response => {
         //状态初始化
         this.alert = true;
         this.alertType = "success";
         this.alertMsg = this.user + Response.data;
-
-        console.log(Response);
       })
       .catch(Error => {
         this.alert = true;

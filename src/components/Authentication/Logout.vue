@@ -19,7 +19,8 @@ export default class Logout extends Vue {
 
   Logout(): void {
     //清理用户信息
-    window.localStorage.clear();
+    window.localStorage["token"] = "";
+    window.localStorage["user"] = "";
 
     this.isLogin.login = false;
   }
