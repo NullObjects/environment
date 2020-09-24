@@ -38,6 +38,8 @@ import Register from "@/components/Authentication/Register.vue";
 import Management from "@/components/Authentication/Management.vue";
 import Logout from "@/components/Authentication/Logout.vue";
 
+import SecurityRsa from "./SecurityRsa";
+
 @Component({
   components: {
     Login,
@@ -49,18 +51,32 @@ import Logout from "@/components/Authentication/Logout.vue";
 export default class AppBar extends Vue {
   isLogin = { login: false };
 
+  getKey(): void {
+    this.axios
+      .get("Authentication/GetKey")
+      .then(Response => {
+        window.localStorage["pubKey"] = Response.data;
+
+        console.log(window.localStorage["pubKey"]);
+      })
+      .catch(Error => {
+        console.log(Error);
+      });
+  }
   /**
    * 初始化
    */
   mounted(): void {
-    if (
-      window.localStorage["token"] != undefined &&
-      window.localStorage["user"] != undefined
-    ) {
-      this.axios.defaults.headers.common["Authorization"] =
-        "Bearer " + window.localStorage["token"];
-      this.isLogin.login = true;
-    }
+    this.getKey();
+    console.log("getRsa::" + new SecurityRsa().Encrypt("test"));
+    // if (
+    //   window.localStorage["token"] != undefined &&
+    //   window.localStorage["user"] != undefined
+    // ) {
+    //   this.axios.defaults.headers.common["Authorization"] =
+    //     "Bearer " + window.localStorage["token"];
+    //   this.isLogin.login = true;
+    // }
   }
 }
 </script>
