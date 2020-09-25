@@ -120,12 +120,17 @@ export default class Register extends Vue {
   @Watch("password")
   @Watch("confirm")
   onPasswordChange() {
-    if (this.confirm != this.password) {
-      this.alert = true;
-      this.alertMsg = "密码不一致";
+    if (this.confirm.length <= 15 && this.password.length <= 15) {
+      if (this.confirm != this.password) {
+        this.alert = true;
+        this.alertMsg = "密码不一致";
+      } else {
+        this.alert = false;
+        this.alertMsg = "";
+      }
     } else {
-      this.alert = false;
-      this.alertMsg = "";
+      this.alert = true;
+      this.alertMsg = "密码长度不能大于15位";
     }
   }
 
@@ -138,6 +143,7 @@ export default class Register extends Vue {
     if (
       this.user == "" ||
       this.roles == "" ||
+      this.email == "" ||
       this.password == "" ||
       this.confirm == "" ||
       this.password != this.confirm
@@ -146,8 +152,6 @@ export default class Register extends Vue {
       this.alertMsg = "请检查注册信息";
       return;
     }
-    console.log("key :" + window.localStorage["pubKey"]);
-    console.log("code :" + SecurityRsa.Encrypt(this.password));
     //注册
     this.axios
       .post("Authentication/Register", {
@@ -157,7 +161,6 @@ export default class Register extends Vue {
         password: SecurityRsa.Encrypt(this.password)
       })
       .then(Response => {
-        //状态初始化
         this.alert = true;
         this.alertType = "success";
         this.alertMsg = this.user + Response.data;

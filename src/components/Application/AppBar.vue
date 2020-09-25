@@ -72,7 +72,9 @@ export default class AppBar extends Vue {
     //登录状态判断
     if (
       window.localStorage["token"] != "" &&
-      window.localStorage["user"] != ""
+      window.localStorage["token"] != undefined &&
+      window.localStorage["user"] != "" &&
+      window.localStorage["user"] != undefined
     ) {
       this.axios.defaults.headers.common["Authorization"] =
         "Bearer " + window.localStorage["token"];

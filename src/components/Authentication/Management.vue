@@ -104,8 +104,8 @@
         </v-card>
         <v-spacer></v-spacer>
         <v-btn text @click="manageMenu = false">取消</v-btn>
-        <v-btn text>修改</v-btn>
-        <v-btn text>删除</v-btn>
+        <v-btn text @click="Modify">修改</v-btn>
+        <v-btn text @click="Delete">删除</v-btn>
       </v-card>
     </v-menu>
   </v-container>
@@ -113,6 +113,7 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
+import SecurityRsa from "@/components/Application/SecurityRsa";
 
 @Component
 export default class Register extends Vue {
@@ -137,13 +138,32 @@ export default class Register extends Vue {
   ];
   dataBody: object[] = [];
 
+  /**
+   * 选项变更
+   */
   @Watch("selected")
   onSelectedChanged() {
     if (this.selected.length != 1) return;
     this.user = this.selected[0]["user"];
     this.roles = this.selected[0]["roles"];
     this.email = this.selected[0]["email"];
+    this.oldPassword = "oldPassword";
   }
+
+  /**
+   * 密码确认
+   */
+  @Watch("newPassword")
+  onPasswordChange() {
+    if (this.newPassword.length > 15) {
+      this.alert = true;
+      this.alertMsg = "密码长度不能大于15位";
+    } else {
+      this.alert = false;
+      this.alertMsg = "";
+    }
+  }
+
   /**
    * 状态初始化
    */
@@ -168,18 +188,21 @@ export default class Register extends Vue {
     ];
     this.dataBody = [];
 
+    this.getUser();
+  }
+
+  /**
+   * 获取用户列表
+   */
+  getUser(): void {
     this.axios
       .get("Authentication/Information")
       .then(Response => {
+        this.dataBody = [];
         if (typeof Response.data.length === "number") {
           // 管理员获取所有用户
           Response.data.forEach(
-            (element: {
-              userName: string;
-              role: string;
-              email: string;
-              password: string;
-            }) => {
+            (element: { userName: string; role: string; email: string }) => {
               this.dataBody.push({
                 user: element.userName,
                 roles: element.role,
@@ -211,14 +234,55 @@ export default class Register extends Vue {
    * 修改用户信息
    * @constructor
    */
-  // Modidy():void{
-  // }
+  Modify(): void {
+    //检验信息
+    if (
+      this.user == "" ||
+      this.roles == "" ||
+      this.email == "" ||
+      this.oldPassword == "" ||
+      this.newPassword == ""
+    ) {
+      this.alert = true;
+      this.alertMsg = "请检查修改信息";
+      return;
+    }
+    this.axios
+      .post("Authentication/Modify", {
+        username: this.user,
+        role: this.roles,
+        email: this.email,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        old_password: SecurityRsa.Encrypt(this.oldPassword),
+        password: SecurityRsa.Encrypt(this.newPassword)
+      })
+      .then(Response => {
+        this.alert = true;
+        this.alertType = "success";
+        this.alertMsg = this.user + Response.data;
+        this.getUser();
+      })
+      .catch(Error => {
+        this.alert = true;
+        this.alertMsg = "修改失败" + Error;
+        console.log(Error);
+      });
+  }
 
   /**
    * 删除用户信息
    * @constructor
    */
-  // Delete():void{
-  // }
+  Delete(): void {
+    this.axios
+      .get("Authentication/Delete/" + this.user)
+      .then(Response => {
+        console.log("DeleteSuccess" + Response.data);
+        this.getUser();
+      })
+      .catch(Error => {
+        console.log("DeleteError" + Error);
+      });
+  }
 }
 </script>
