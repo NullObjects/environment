@@ -116,7 +116,7 @@ export default class DeviceStatus extends Vue {
         }
       })
       .catch(Error => {
-        console.log("axiosErr:" + Error);
+        console.log("getDeviceErr:" + Error);
       });
   }
 }

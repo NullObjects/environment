@@ -24,7 +24,7 @@
       <div class="d-flex align-right">
         <Login :is-login="isLogin" v-if="!isLogin.login" />
         <Register v-if="!isLogin.login" />
-        <Management v-if="isLogin.login" />
+        <Management :is-login="isLogin" v-if="isLogin.login" />
         <Logout :is-login="isLogin" v-if="isLogin.login" />
       </div>
     </v-app-bar>
@@ -71,10 +71,8 @@ export default class AppBar extends Vue {
     this.getKey();
     //登录状态判断
     if (
-      window.localStorage["token"] != "" &&
-      window.localStorage["token"] != undefined &&
-      window.localStorage["user"] != "" &&
-      window.localStorage["user"] != undefined
+      window.localStorage["token"].length >= 1 &&
+      window.localStorage["user"].length >= 1
     ) {
       this.axios.defaults.headers.common["Authorization"] =
         "Bearer " + window.localStorage["token"];

@@ -123,6 +123,7 @@ export default class Register extends Vue {
     if (this.confirm.length <= 15 && this.password.length <= 15) {
       if (this.confirm != this.password) {
         this.alert = true;
+        this.alertType = "warning";
         this.alertMsg = "密码不一致";
       } else {
         this.alert = false;
@@ -130,6 +131,7 @@ export default class Register extends Vue {
       }
     } else {
       this.alert = true;
+      this.alertType = "warning";
       this.alertMsg = "密码长度不能大于15位";
     }
   }
@@ -149,6 +151,7 @@ export default class Register extends Vue {
       this.password != this.confirm
     ) {
       this.alert = true;
+      this.alertType = "warning";
       this.alertMsg = "请检查注册信息";
       return;
     }
@@ -167,6 +170,7 @@ export default class Register extends Vue {
       })
       .catch(Error => {
         this.alert = true;
+        this.alertType = "warning";
         this.alertMsg = "注册失败，用户名已注册";
         console.log(Error);
       });

@@ -89,7 +89,7 @@ export default class Environment extends Vue {
         }
       })
       .catch(Error => {
-        console.log("axiosErr:" + Error);
+        console.log("getEnvironmentErr:" + Error);
       });
   }
 }

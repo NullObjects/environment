@@ -62,7 +62,7 @@ export default class EnvironmentRefresh extends Vue {
         }
       })
       .catch(Error => {
-        console.log("axiosErr:" + Error);
+        console.log("getEnvironmentErr:" + Error);
       });
   }
 
@@ -87,7 +87,7 @@ export default class EnvironmentRefresh extends Vue {
         this.Environment.series[1].data.push(Response.data.humidity);
       })
       .catch(Error => {
-        console.log("axiosErr:" + Error);
+        console.log("getEnvironmentErr:" + Error);
       });
   }
 }

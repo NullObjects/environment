@@ -112,11 +112,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import SecurityRsa from "@/components/Application/SecurityRsa";
 
 @Component
 export default class Register extends Vue {
+  /**
+   * 登录状态控制
+   */
+  @Prop() isLogin!: { login: boolean };
+
   manageMenu = false;
   user = "";
   roles = "public::";
@@ -225,6 +230,7 @@ export default class Register extends Vue {
       })
       .catch(Error => {
         this.alert = true;
+        this.alertType = "warning";
         this.alertMsg = "获取用户信息失败";
         console.log(Error);
       });
@@ -244,27 +250,31 @@ export default class Register extends Vue {
       this.newPassword == ""
     ) {
       this.alert = true;
+      this.alertType = "warning";
       this.alertMsg = "请检查修改信息";
       return;
     }
     this.axios
       .post("Authentication/Modify", {
+        isAdmin: this.table,
         username: this.user,
         role: this.roles,
         email: this.email,
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        old_password: SecurityRsa.Encrypt(this.oldPassword),
+        oldPassword: SecurityRsa.Encrypt(this.oldPassword),
         password: SecurityRsa.Encrypt(this.newPassword)
       })
       .then(Response => {
         this.alert = true;
         this.alertType = "success";
         this.alertMsg = this.user + Response.data;
-        this.getUser();
+        // 非管理员，退出登录;管理员，刷新数据
+        if (!this.table) this.isLogin.login = false;
+        else this.getUser();
       })
       .catch(Error => {
         this.alert = true;
-        this.alertMsg = "修改失败" + Error;
+        this.alertType = "warning";
+        this.alertMsg = "修改失败,请确定原密码";
         console.log(Error);
       });
   }
@@ -278,10 +288,15 @@ export default class Register extends Vue {
       .get("Authentication/Delete/" + this.user)
       .then(Response => {
         console.log("DeleteSuccess" + Response.data);
-        this.getUser();
+        // 非管理员，退出登录;管理员，刷新数据
+        if (!this.table) this.isLogin.login = false;
+        else this.getUser();
       })
       .catch(Error => {
-        console.log("DeleteError" + Error);
+        this.alert = true;
+        this.alertType = "warning";
+        this.alertMsg = "删除失败";
+        console.log(Error);
       });
   }
 }

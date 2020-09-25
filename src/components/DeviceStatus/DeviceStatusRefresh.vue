@@ -91,7 +91,7 @@ export default class DeviceStatusRefresh extends Vue {
         }
       })
       .catch(Error => {
-        console.log("axiosErr:" + Error);
+        console.log("getDeviceErr:" + Error);
       });
   }
 
@@ -134,7 +134,7 @@ export default class DeviceStatusRefresh extends Vue {
           100 - Response.data.hddOccupancyRate;
       })
       .catch(Error => {
-        console.log("axiosErr:" + Error);
+        console.log("getDeviceErr:" + Error);
       });
   }
 }

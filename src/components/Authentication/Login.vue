@@ -104,6 +104,7 @@ export default class Login extends Vue {
       })
       .catch(Error => {
         this.alert = true;
+        this.alertMsg = "warning";
         this.alertMsg = "登录失败，请检查账号及密码";
         console.log(Error);
       });
