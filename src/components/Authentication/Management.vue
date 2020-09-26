@@ -256,7 +256,6 @@ export default class Register extends Vue {
     }
     this.axios
       .post("Authentication/Modify", {
-        isAdmin: this.table,
         username: this.user,
         role: this.roles,
         email: this.email,
