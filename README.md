@@ -3,6 +3,7 @@
 - Vuetify框架
 - vue-echarts(echarts)图表
 - vue-axios(axios)获取后台数据
+- jsencrypt RSA加密
 - vue-particles背景
 - live2d-widget看板娘
 
