@@ -1,4 +1,4 @@
 declare module "vue-particles" {
-    let VueParticles: any;
-    export = VueParticles;
+  let VueParticles: any;
+  export = VueParticles;
 }

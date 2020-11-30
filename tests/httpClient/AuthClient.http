@@ -1,0 +1,41 @@
+# 认证Api测试
+@host = https://10.168.1.2/Authentication/
+@pwd_rsa = nuTGN1syLvel0rBtGsld75vLxLEpZT1c+AOOnY5A972y+j1R2C5D287v2KZwyv8DX63v5ToBK6d1rKMHwK4Vpfyl2fbFb0+bR0nZI954f9cAzpy25pclYw9Jt8gZ3/oD8VyLxl0D7hrbRT+i9V18hzhIxVbafOS1MGlDUSaQHB1+h0Izaf22EDU+xe+5F1OqqXZ3AfI+0I5AvHqHOiXjMgIDGkStgSBgIEwBYfudRKHhp/8v6W0bhPfIviJ7EDvV7zMzKZod2B9vZgBBSCbOWxJWzF0biLwnrxPIruKOCM/pABlbG0h9vKm6JlXPJuGU8m8Uu1wVA7LrqLoeKYxfNQ==
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsicHVibGljIiwiYWRtaW4iXSwiZXhwIjoxNjA2NzAxNDQ3LCJpc3MiOiJlbnZpcm9ubWVudC5jbiIsImF1ZCI6IkVudmlyb25tZW50QXBpIn0.LdvWq2V_1ccf2VVWQxY6pSrPZ5Ad7qYSUF5ZD04VkwA
+{{host}}GetKey
+###
+Post {{host}}Register
+Content-Type: application/json
+
+{
+    "username":"aad",
+    "email":"aaa",
+    "password":"{{pwd_rsa}}",
+    "role":"public::test"
+}
+###
+Post {{host}}Login
+Content-Type: application/json
+
+{
+    "username":"admin",
+    "password":"{{pwd_rsa}}"
+}
+###
+{{host}}Information
+Authorization: Bearer {{jwt}}
+###
+POST {{host}}Modify
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+    "username":"test",
+    "email":"test@test",
+    "oldPassword":"{{pwd_rsa}}",
+    "password":"{{pwd_rsa}}",
+    "role":"public::test"
+}
+###
+{{host}}Delete/aaa
+Authorization: Bearer {{jwt}}

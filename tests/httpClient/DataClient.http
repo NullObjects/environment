@@ -1,0 +1,10 @@
+# 数据Api测试
+@host = https://10.168.1.2/
+@hour = hour
+@day = day
+@week = week
+@latest = latest
+GET {{host}}Environment/Get/{{latest}}
+###
+GET {{host}}DeviceStatus/Get/{{hour}}
+###
